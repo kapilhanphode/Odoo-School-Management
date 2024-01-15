@@ -1,0 +1,8 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access.student.admission,access_student.admission,school_management.model_student_admission,base.group_user,1,1,1,1
+access.student.registration,access_student_registration,school_management.model_student_registration,base.group_user,1,1,1,1
+access.teacher.registration,access_teacher_registration,school_management.model_teacher_registration,base.group_user,1,1,1,1
+access.school.subject,access_school_subject,school_management.model_school_subject,base.group_user,1,1,1,1
+access.class.registration,access_class_registration,school_management.model_class_registration,base.group_user,1,1,1,1
+access.sport.registration,access_sport_registration,school_management.model_sport_registration,base.group_user,1,1,1,1
+access.student.sport.registration,access_student_sport_registration,school_management.model_student_sport_registration,base.group_user,1,1,1,1

@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="school_teacher_registration_list_view" model="ir.ui.view">
+        <field name="name">teacher.registration.view.tree</field>
+        <field name="model">teacher.registration</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="teacher_name"/>
+                <field name="teacher_gender"/>
+                <field name="teacher_dob"/>
+                <field name="teacher_age"/>
+                <field name="teacher_email"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="school_teacher_view_form" model="ir.ui.view">
+        <field name="name">teacher.registration.view.form</field>
+        <field name="model">teacher.registration</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="teacher_name"/>
+                            <field name="teacher_email"/>
+                            <field name="teacher_phone_no"/>
+                            <field name="teacher_gender" widget="radio" options="{'horizontal': true}"/>
+                            <field name="teacher_dob"/>
+                            <field name="teacher_age"/>
+                        </group>
+                        <group>
+                            <field name="teacher_qualification"/>
+                            <field name="teacher_marital_status" widget="radio"/>
+                            <field name="teacher_address"/>
+                            <field name="teacher_joining_date"/>
+                            <field name="teaching_type" widget="radio"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="School Details" name="school_details"
+                              attrs="{'invisible': [('teaching_type', '!=', 'school')]}">
+                            <group>
+                                <group>
+                                    <field name="teaching_class" widget="radio"/>
+                                </group>
+                                <group>
+                                    <field name="sub_name" widget="many2many_checkboxes"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Jr College Details" name="jr_college_details"
+                              attrs="{'invisible': [('teaching_type', 'in', ['school','graduation','post_graduation'])]}">
+                            <group>
+                                <group>
+                                    <field name="teaching_jr_class" widget="radio"/>
+                                    <field name="clg_stream" widget="radio"/>
+                                </group>
+                                <group>
+                                    <field name="sub_name" widget="many2many_checkboxes"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Graduation Details" name="college_details"
+                              attrs="{'invisible': [('teaching_type', 'in', ['jr_college','school','post_graduation'])]}">
+                            <group>
+                                <group>
+                                    <field name="clg_stream" widget="radio"/>
+                                    <field name="graduation_clg_stream" widget="radio"/>
+                                </group>
+                                <group>
+                                    <field name="sub_name" widget="many2many_checkboxes"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Post Graduation Details" name="college_details"
+                              attrs="{'invisible': [('teaching_type', '!=', 'post_graduation')]}">
+                            <group>
+                                <group>
+                                    <field name="clg_stream" widget="radio"/>
+                                    <field name="post_graduation_clg_stream" widget="radio"/>
+                                </group>
+                                <group>
+                                    <field name="sub_name" widget="many2many_checkboxes"/>
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_teacher_registration" model="ir.actions.act_window">
+        <field name="name">Teacher Registration</field>
+        <field name="res_model">teacher.registration</field>
+        <field name="view_mode">tree,form</field>
+        <!--<field name="context">{'search_default_filter_male':1}</field>-->
+        <!--        <field name="context">{'search_default_group_by_gender':1}</field>-->
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Register your first Teacher!
+            </p>
+        </field>
+    </record>
+
+    <menuitem name="Teacher Registration"
+              id="teacher_registration_menu" parent="student_details_menu"
+              action="action_teacher_registration" sequence="3"/>
+
+
+</odoo>

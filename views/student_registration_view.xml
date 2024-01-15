@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="school_student_registration_list_view" model="ir.ui.view">
+        <field name="name">student.registration.view.tree</field>
+        <field name="model">student.registration</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="student_name"/>
+                <field name="student_address"/>
+                <field name="student_age"/>
+                <field name="student_gender"/>
+                <field name="student_admission_type"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="school_student_view_form" model="ir.ui.view">
+        <field name="name">student.registration.view.form</field>
+        <field name="model">student.registration</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="alert alert-info text-center o_form_header" role="alert"
+                         attrs="{'invisible': [('is_birthday', '!=' , True)]}">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a>
+                        <div>
+                            <strong>Today is Birthday</strong>
+                        </div>
+                        <div>of
+                        </div>
+                        <strong>
+                            <field name="student_name" readonly="1"/>
+                        </strong>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="student_name"/>
+                            <field name="student_phone_no"/>
+                            <field name="student_email"/>
+                            <field name="student_gender" widget="radio" options="{'horizontal': true}"/><!--invisible="context.get('hide_student_gender')"-->
+                            <field name="marital_status" widget="radio"/>
+
+                        </group>
+                        <group>
+                            <field name="student_reg_date"/>
+                            <field name="student_dob"/>
+                            <field name="is_birthday"/>
+                            <field name="student_age"/>
+                            <field name="student_address"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Parent Details" name="parent_details"
+                              attrs="{'invisible': [('marital_status', '=', 'married')]}">
+                            <group>
+                                <group>
+                                    <field name="parent_name"/>
+                                    <field name="parent_phone_no"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Partner Details" name="partner_details"
+                              attrs="{'invisible': [('marital_status', '=', 'single')]}">
+                            <group>
+                                <group>
+                                    <field name="partner_name"/>
+                                    <field name="partner_phone_no"/>
+                                </group>
+                            </group>
+                        </page>
+
+                        <page string="Admission" name="school_admission_details">
+                            <group>
+                                <group>
+                                    <field name="student_admission_type" widget="radio"/>
+                                    <field name="class_teacher" widget="radio"/>
+                                </group>
+                                <group>
+                                    <field name="stud_class" widget="radio" attrs="{'invisible': [('student_admission_type', '!=', 'school')]}"/>
+                                    <field name="teaching_jr_class" widget="radio" attrs="{'invisible': [('student_admission_type', '!=', 'jr_college')]}"/>
+                                    <field name="clg_stream" widget="radio" attrs="{'invisible': [('student_admission_type', '=', 'school')]}"/>
+                                    <field name="graduation_clg_stream" widget="radio" attrs="{'invisible': [('student_admission_type', '!=', 'graduation')]}"/>
+                                    <field name="post_graduation_clg_stream" widget="radio" attrs="{'invisible': [('student_admission_type', '!=', 'post_graduation')]}"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Other Details" name="other_details">
+                            <group>
+                                <group>
+                                    <field name="fav_sport"/>
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_student_registration_search" model="ir.ui.view">
+        <field name="name">student.registration.search.view</field>
+        <field name="model">student.registration</field>
+        <field name="arch" type="xml">
+            <search>
+                <filter name="male"
+                        string="Male"
+                        domain="[('student_gender','=','male')]"/>
+                <filter name="female"
+                        string="Female"
+                        domain="[('student_gender','=','female')]"/>
+                <group expand="0" string="Group By">
+                    <filter name="group_by_student_gender"
+                        string="Gender"
+                        context="{'group_by':'student_gender'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_student_registration" model="ir.actions.act_window">
+        <field name="name">Student Registration</field>
+        <field name="res_model">student.registration</field>
+        <field name="view_mode">tree,form</field>
+        <!--<field name="domain">[('student_gender','=','male')]</field>-->
+        <!--<field name="context">{'search_default_filter_male':1}</field>-->
+        <!--        <field name="context">{'search_default_group_by_gender':1}</field>-->
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first Student!
+            </p>
+        </field>
+    </record>
+
+    <menuitem name="Student Registration"
+              id="student_registration_menu" parent="student_details_menu"
+              action="action_student_registration" sequence="0"/>
+
+</odoo>

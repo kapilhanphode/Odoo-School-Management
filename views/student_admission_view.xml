@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="school_student_list_view" model="ir.ui.view">
+        <field name="name">student.admission_view.tree</field>
+        <field name="model">student.admission</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="stud_name"/>
+                <field name="stud_gender"/>
+                <field name="stud_admission_type"/>
+                <field name="stud_age"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="school_student_view_form1" model="ir.ui.view">
+        <field name="name">student.admission.view.form</field>
+        <field name="model">student.admission</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="stud_name"/>
+                            <field name="stud_gender"/>
+                            <field name="stud_age"/>
+                        </group>
+                        <group>
+                            <field name="stud_address"/>
+                            <field name="stud_admission_reg_date"/>
+                            <field name="stud_admission_type"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="School Details" name="school_details"
+                              attrs="{'invisible': [('stud_admission_type', '!=', 'school')]}">
+                            <group>
+                                <group>
+                                    <field name="stud_class"/>
+                                </group>
+                                <group>
+                                    <field name="class_teacher"/>
+                                    <field name="sub_name" widget="many2many_checkboxesWrong value for student.admission.sub_name1: 18"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Jr College Details" name="jr_college_details"
+                              attrs="{'invisible': [('stud_admission_type', '!=', 'jr_college')]}">
+                            <group>
+                                <group>
+                                    <field name="teaching_jr_class"/>
+                                    <field name="clg_stream"/>
+                                </group>
+                                <group>
+                                    <field name="class_teacher"/>
+                                    <field name="sub_name" widget="many2many_tags"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Graduation Details" name="graduation_college_details"
+                              attrs="{'invisible': [('stud_admission_type', '!=', 'graduation')]}">
+                            <group>
+                                <group>
+                                    <field name="clg_stream"/>
+                                    <field name="graduation_clg_stream" />
+                                </group>
+                                <group>
+                                    <field name="class_teacher"/>
+                                    <field name="sub_name" widget="many2many_tags"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Post Graduation Details" name="post_graduation_college_details"
+                              attrs="{'invisible': [('stud_admission_type', '!=', 'post_graduation')]}">
+                            <group>
+                                <group>
+                                    <field name="clg_stream"/>
+                                    <field name="post_graduation_clg_stream"/>
+                                </group>
+                                <group>
+                                    <field name="class_teacher"/>
+                                    <field name="sub_name" widget="many2many_tags"/>
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_student_admission" model="ir.actions.act_window">
+        <field name="name">Student Admission</field>
+        <field name="res_model">student.admission</field>
+        <field name="view_mode">tree,form</field>
+        <!--<field name="context">{'search_default_filter_male':1}</field>-->
+        <!--        <field name="context">{'search_default_group_by_gender':1}</field>-->
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first Student!
+            </p>
+        </field>
+    </record>
+
+    <menuitem name="School Management" web_icon="school_management,static/description/icon.png"
+              id="school_management_root_menu" sequence="-100"/>
+
+    <menuitem name="Student Details"
+              id="student_details_menu" parent="school_management_root_menu" sequence="1"/>
+
+    <menuitem name="Student Admission"
+              id="student_menu" parent="student_details_menu"
+              action="action_student_admission" sequence="1"/>
+
+</odoo>

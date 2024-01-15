@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="sport_registration_list_view" model="ir.ui.view">
+        <field name="name">sport.registration.view.tree</field>
+        <field name="model">sport.registration</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="sport_name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="sport_registration_view_form" model="ir.ui.view">
+        <field name="name">sport.registration.view.form</field>
+        <field name="model">sport.registration</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="sport_name"/>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_sport_registration" model="ir.actions.act_window">
+        <field name="name">Sport Registration</field>
+        <field name="res_model">sport.registration</field>
+        <field name="view_mode">tree,form</field>
+        <!--<field name="context">{'search_default_filter_male':1}</field>-->
+        <!--        <field name="context">{'search_default_group_by_gender':1}</field>-->
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first Sports!
+            </p>
+        </field>
+    </record>
+
+    <record id="student_sport_registration_list_view" model="ir.ui.view">
+        <field name="name">student.sport.registration.view.tree</field>
+        <field name="model">student.sport.registration</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="stud_name"/>
+                <field name="sport_name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="student_sport_registration_view_form" model="ir.ui.view">
+        <field name="name">student.sport.registration.view.form</field>
+        <field name="model">student.sport.registration</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="sport_name"/>
+                        <field name="stud_name" widget="many2many_tags"/>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_student_sport_registration" model="ir.actions.act_window">
+        <field name="name">Student Sport Registration</field>
+        <field name="res_model">student.sport.registration</field>
+        <field name="view_mode">tree,form</field>
+        <!--<field name="context">{'search_default_filter_male':1}</field>-->
+        <!--        <field name="context">{'search_default_group_by_gender':1}</field>-->
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first Student's Sports!
+            </p>
+        </field>
+    </record>
+
+
+
+    <menuitem name="Sports Registration"
+              id="sport_registration_root_menu" parent="school_management_root_menu" sequence="3"/>
+
+    <menuitem name="Sports Registration"
+              id="sport_registration_menu" parent="sport_registration_root_menu"
+              action="action_sport_registration" sequence="1"/>
+
+    <menuitem name="Student's Sports Registration"
+              id="student-sport_registration_menu" parent="sport_registration_root_menu"
+              action="action_student_sport_registration" sequence="2"/>
+
+</odoo>
